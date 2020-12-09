@@ -10,26 +10,25 @@ def find_bad_num(numbers):
             for y in preamble:
                 if x != y and x + y == curr:
                     found = True
-                    continue
         if not found:
             return curr
 
         prei += 1
         i += 1
 
-def find_weakness(preamble, bad_num):
-    for j in range(len(preamble)):
+def find_weakness(numbers, bad_num):
+    for j in range(len(numbers)):
         acc = 0
         cont = []
-        for i in range(j, len(preamble)):
+        for i in range(j, len(numbers)):
             if acc == bad_num:
                 cont.sort()
                 return cont[0] + cont[-1]
             elif acc > bad_num:
                 break
 
-            cont.append(preamble[i])
-            acc += preamble[i]
+            cont.append(numbers[i])
+            acc += numbers[i]
 
 def calculate():
     numbers = []
