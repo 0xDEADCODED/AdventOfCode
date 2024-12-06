@@ -1,6 +1,5 @@
 import re,json
 p1,p2 = sum([int(x) for x in re.findall(r"-?\d+", open('in').read().strip())]),0
-data = json.load(open('in'))
 
 def parse_json(obj):
     if type(obj) == int: return obj
@@ -15,6 +14,6 @@ def parse_json(obj):
 
     return total
 
-for j in data: p2 += parse_json(j)
+for j in json.load(open('in')): p2 += parse_json(j)
 
 print(f"{p1=} || {p2=}")
