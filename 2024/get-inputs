@@ -1,8 +1,0 @@
-#!/bin/bash
-
-year=$(date +%Y)
-day=2
-
-aoc d -y $year -d $day
-extract-ex
-
