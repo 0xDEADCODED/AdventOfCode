@@ -16,7 +16,7 @@ def valid_pw(pw):
     dubs = []
     for i in range(len(pw)):
         if i + 1 < len(pw) and pw[i] == pw[i+1] and (i + 2 >= len(pw) or pw[i] != pw[i+2]) and (i-1 < 0 or pw[i-1] != pw[i]):
-                dubs.append(pw[i]*2)
+            dubs.append(pw[i]*2)
     if len(set(dubs)) < 2: return False
 
     return True
