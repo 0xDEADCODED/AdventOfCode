@@ -9,9 +9,7 @@ def operate(nums, total, totals, p2=False):
     next = nums.pop(0)
     operate(nums[:], total + next, totals,p2)
     operate(nums[:], total * next, totals,p2)
-    if p2:
-        concat = int(str(total) + str(next))
-        operate(nums[:], concat, totals,p2)
+    if p2: operate(nums[:], int(str(total) + str(next)), totals,p2)
 
 for tv,nums in eqs:
     p1t,p2t = [],[]
