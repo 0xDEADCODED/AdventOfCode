@@ -7,7 +7,6 @@ for x in s: search[x[0]] = int(x[1])
 for i in range(len(data)):
     if (i+1) not in sues.keys():
         sues[i+1] = {}
-    #    sues[i+1] = {'children':0, 'cats':0, 'samoyeds':0, 'pomeranians':0, 'akitas':0, 'vizslas': 0, 'goldfish': 0, 'trees':0, 'cars':0,'perfumes':0}
     csue = data[i]
     for (k,v) in zip(*[iter(csue)]*2):
         try:
