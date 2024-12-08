@@ -41,9 +41,3 @@ for ants in nodes.values():
 
 
 print(f"p1={len(p1)} || p2={len(p2)}")
-
-#for (r,c) in p2:
-#    if grid[r][c] == '.':
-#        grid[r][c] = '#'
-#for l in grid:
-#    print(''.join(l))
