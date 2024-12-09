@@ -19,11 +19,11 @@ for s in range(2,len(presents)+1):
         
         p1v,p2v = valid(g,rest)
         if p1v and len(g) <= p1_ml:
-            p1_ml = min(p1_ml,len(g))
+            p1_ml = len(g)
             prod = product(g)
             p1 = prod if p1 == 0 else min(p1,prod)
         elif p2v and len(g) <= p2_ml:
-            p2_ml = min(p2_ml,len(g))
+            p2_ml = len(g)
             prod = product(g)
             p2 = prod if p2 == 0 else min(p2,prod)
     
