@@ -1,33 +1,27 @@
 import re
-rooms = re.findall(r"(.*)-(\d+)\[(.*)\]", open('ex').read().strip())
+rooms,p1,p2 = re.findall(r"(.*)-(\d+)\[(.*)\]", open('in').read().strip()),0,0
+key = 'abcdefghijklmnopqrstuvwxyz'
 
 def sort_counts(cnts):
     cnts = sorted(cnts,key=lambda x: x[1],reverse=True)
-    return cnts
-
     for n in range(len(cnts) - 1, 0, -1):
-        
-        # Initialize swapped to track if any swaps occur
-        swapped = False  
-
-        # Inner loop to compare adjacent elements
+        swapped = False
         for i in range(n):
-            if cnts[i] > cnts[i + 1]:
-              
-                # Swap elements if they are in the wrong order
+            if cnts[i][1] == cnts[i+1][1] and cnts[i][0] > cnts[i + 1][0]:
                 cnts[i], cnts[i + 1] = cnts[i + 1], cnts[i]
-                
-                # Mark that a swap has occurred
                 swapped = True
         
-        # If no swaps occurred, the list is already sorted
-        if not swapped:
-            break
+        if not swapped: break
     return cnts
     
+def shift(name,id):
+    name = [x.strip() for x in list(name.replace('-', ' '))]
+    for _ in range(int(id)):
+        for n in range(len(name)):
+            if n != ' ':
+                name[n] = key[(key.index(name[n]) + 1) % 26]
+    return ''.join(name)
 
-
-p1 = 0
 for (name,id,crc) in rooms:
     cnts,counted,valid = [],set(),True
     for n in name:
@@ -38,7 +32,10 @@ for (name,id,crc) in rooms:
     cnts = sort_counts(cnts)
 
     for i in range(len(crc)):
-        if cnts[i][0] != crc[i] :#and not tie_breaker(cnts[i],cnts,crc):
-            print(cnts[i][0],crc[i])
-            valid = False
-    print(name,id,crc,cnts,valid)
+        if cnts[i][0] != crc[i]: valid = False
+    if valid: 
+        p1 += int(id)
+        if shift(name,id) == 'northpolewobjectwstorage':
+            p2 = int(id)
+        
+print(f"{p1=} || {p2=}")
