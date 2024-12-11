@@ -9,11 +9,6 @@ def parse_op(op):
         return op[0],int(dims[0]),int(dims[1]),None
     else:
         return op[0],op[1],int(op[2].split('=')[1]), int(op[-1])
-    
-def print_grid():
-    for l in grid:
-        print(''.join(l))
-    print('\n')
 
 for o in inst:
     op,arg1,arg2,arg3 = parse_op(o)
@@ -32,6 +27,4 @@ for o in inst:
             for r in range(R):
                 grid[(r+arg3)%R][arg2] = col[r]
 
-p1 = sum([x.count('#') for x in grid])  
-print(p1)
-print_grid()
+print(f"p1={sum([x.count('#') for x in grid])} || p2=Read the terminal")
