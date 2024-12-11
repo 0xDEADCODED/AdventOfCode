@@ -1,27 +1,18 @@
+import re
 comp = open('in').read().strip()
 
 def decompress(comp,p2=False):
-    build,i = '',0
-    while i < len(comp):
-        if comp[i] == '(':
-            end = comp.find(')',i)
-            num,rep = comp[i:end+1].replace('(','').replace(')','').split('x')
-            seq = comp[end+1:end+int(num)+1]
-            if not p2 or '(' not in seq:
-                build += seq*int(rep)
-            else:
-                build += decompress(seq,p2) * int(rep)
-
-            i = end+int(num)+1
-        else:
-            build += comp[i]
-            i += 1
-    return build
+    bracket = re.search(r'\((\d+)x(\d+)\)', comp)
+    if not bracket:
+        return len(comp)
+    pos = bracket.start(0)
+    num_chars = int(bracket.group(1))
+    rep = int(bracket.group(2))
+    i = pos + len(bracket.group())
+    return  len(comp[:pos]) + decompress(comp[i:i+num_chars],p2) * rep + decompress(comp[i+num_chars:],p2) if p2 else \
+        len(comp[:pos]) + len(comp[i:i+num_chars]) * rep + decompress(comp[i+num_chars:],p2)
 
 p1 = decompress(comp)
-print(f"p1={len(p1)}")
-
-# 1057308 too low
 p2 = decompress(comp,True)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-print(f"p2={len(p2)}")
+print(f"{p1=} || {p2=}")
