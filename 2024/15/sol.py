@@ -55,10 +55,7 @@ def move_p2(grid,r,c,dir,to_move):
             return move_item(grid,r,c,dr,dc)
         return move_item(grid,r,c,dr,dc)
     elif dir in ['^','v']:
-        if dir == '^':
-            rbs,lbs = 1,-1
-        else:
-            rbs,lbs = 1,-1
+        rbs,lbs = 1,-1
         if grid[r+dr][c+dc] == '[':
             center_r,center_c = move_p2(grid,r+dr,c+dc,dir,to_move)
             close_r,close_c = move_p2(grid,r+dr,c+dc+rbs,dir,to_move)
