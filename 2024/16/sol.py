@@ -1,6 +1,4 @@
-import pickle
-from collections import deque,defaultdict
-from functools import lru_cache
+from collections import defaultdict
 import heapq
 
 maze = [list(x.strip()) for x in open('in').readlines()]
@@ -14,12 +12,9 @@ neighbors = {
     (0,1): [(0,1),(1,0),(-1,0)]
 }
 
-@lru_cache(None)
 def walk():
     global maze,sr,sc,er,ec,neighbors,R,C
-    dist = defaultdict(lambda:int(10e9))
-    seen = set()
-    dq = []
+    dist,seen,dq = defaultdict(lambda:int(10e9)),set(),[]
     heapq.heappush(dq,(0,sr,sc,0,1))
     dist[(sr,sc)] = 0
 
@@ -46,19 +41,33 @@ def walk():
                     dist[(r+rr,c+cc)] = s
                     heapq.heappush(dq,(s,r+rr,c+cc,rr,cc))
 
-    return dist
+    return dist[(er,ec)]
 
-def count_locs(dist):
-    global er,ec
-    seen = set()
-    dq = [(er,ec)]
+def count_seats(grid,sr,sc,er,ec):
+    dirs = [(0,1), (1,0), (0,-1), (-1,0)]
+    dq,visited,best,seats = [],set(),int(10e9),{(sr,sc)}
+    heapq.heappush(dq,(0,sr,sc,0,[(sr,sc)]))
+    while True:
+        score,r,c,d,path = heapq.heappop(dq)
+        if score > best:
+            return len(seats)
+        visited.add((r,c,d))
+        for i in [0,-1,1,2]:
+            ndir = (d+i)%4
+            dr,dc = dirs[ndir]
+            r1,c1 = r+dr,c+dc
+            if grid[r1][c1]=='#':
+                continue
+            if (r1,c1,ndir) in visited:
+                continue
+            s = score+abs(i)*1000+1
+            if (r1,c1)==(er,ec):
+                best = s
+                seats.update(path+[(r1,c1)])
+            else:
+                path_cp = path + [(r1,c1)]
+                heapq.heappush(dq, (s,r1,c1,ndir,path_cp))
 
-    while dq:
-        r,c = dq.pop()
-
-        seen.add((r,c))
-
-
-dist = walk()
-p1 = dist[(er,ec)]
-print(p1)
+p1 = walk()
+p2 = count_seats(maze,sr,sc,er,ec)
+print(f"{p1=} || {p2=}")
